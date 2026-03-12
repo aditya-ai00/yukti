@@ -124,6 +124,20 @@ This project is licensed under the **MIT License**.
 
 ---
 
+## Contributing
+
+Contributions are welcome.
+
+If you would like to improve this project:
+
+1. Fork the repository
+2. Create a new feature branch
+3. Commit your changes
+4. Submit a pull request
+
+Please ensure your code follows clean coding practices and proper documentation.
+
+
 ## Author
 
 Developed as part of a Civic Tech / Governance AI project to explore how artificial intelligence can assist public leaders and administrators in decision-making and communication.
