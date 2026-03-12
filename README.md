@@ -1,109 +1,129 @@
-AdminAI — Leadership Intelligence Platform
+# AdminAI — Leadership Intelligence Platform
 
 AdminAI is an AI-powered governance assistant designed to support public leaders, administrators, and policy teams in managing information, decisions, and communication efficiently.
 
-The platform combines document intelligence, issue tracking, task management, speech generation, and data insights into a unified dashboard to help administrators respond faster to civic challenges and community needs.
+The platform integrates document intelligence, issue tracking, task management, speech generation, and data insights into a unified dashboard to help administrators respond faster to civic challenges.
 
-Overview
+---
 
-Public leaders handle large volumes of information every day including policy documents, meeting notes, citizen complaints, and operational reports. Processing this information manually slows decision making.
+## Overview
+
+Public leaders handle large volumes of information every day including policy documents, meeting notes, citizen complaints, and operational reports. Processing this information manually slows decision-making.
 
 AdminAI provides an intelligent digital workspace that uses AI to summarize information, generate communication drafts, track issues, and provide data insights to support better governance.
 
-Key Features
-AI Document Intelligence
+---
 
+## Key Features
+
+### AI Document Intelligence
 Automatically summarizes long reports, policy documents, emails, or notes into clear executive summaries, bullet points, or action items.
 
-Meeting Intelligence
-
+### Meeting Intelligence
 Extracts key decisions, responsibilities, and follow-ups from meeting notes or transcripts.
 
-Speech & Communication Assistant
-
+### Speech & Communication Assistant
 Generates speeches, official responses, statements, and press releases based on context and tone.
 
-Constituency Issue Tracker
-
+### Constituency Issue Tracker
 Tracks civic issues such as infrastructure complaints, funding gaps, or public service problems and prioritizes them for administrators.
 
-Task & Schedule Management
-
+### Task & Schedule Management
 Helps leaders manage meetings, tasks, and priorities with an AI assistant that suggests what to focus on.
 
-Data Insights Dashboard
-
+### Data Insights Dashboard
 Analyzes civic data such as budgets, projects, and public sentiment to highlight trends and risks.
 
-AI Insight Engine
-
+### AI Insight Engine
 Allows leaders to ask questions about data, reports, or issues and receive structured insights and recommendations.
 
-Dashboard Modules
+---
+
+## Dashboard Modules
 
 The platform includes several modules accessible from the sidebar:
 
-Dashboard
-Overview of key statistics, tasks, issues, and quick AI assistant.
+- **Dashboard** – Overview of statistics, tasks, issues, and quick AI assistant  
+- **Summarizer** – Summarizes documents, meeting notes, or email threads  
+- **Speech Writer** – Creates speeches, responses, or official communication  
+- **Issue Tracker** – Manages community issues and allows AI analysis  
+- **Schedule & Tasks** – Tracks meetings and pending tasks  
+- **Data Insights** – Visualizes budget usage and public sentiment  
 
-Summarizer
-Summarizes documents, meeting notes, or email threads.
+---
 
-Speech Writer
-Creates speeches, responses, or official communication.
+## Tech Stack
 
-Issue Tracker
-Manages community issues and allows AI analysis.
+**Frontend**
+- HTML5
+- CSS3
+- JavaScript
 
-Schedule & Tasks
-Tracks daily meetings and pending work.
+**AI Integration**
+- Anthropic Claude API
 
-Data Insights
-Visualizes budget usage, community sentiment, and analytics.
+**Design**
+- Custom dashboard UI
+- Responsive layout
+- Dark theme interface
 
-Tech Stack
+---
 
-Frontend
-HTML
-CSS
-JavaScript
+## Installation
 
-AI Integration
-Anthropic Claude API
+Clone the repository:
 
-Design
-Custom dashboard UI
-Responsive layout
-Modern dark theme interface
+Navigate to the project folder:
 
-Example Use Cases
+Run the project:
 
-Government administrators summarizing policy reports
+Simply open the `index.html` file in your browser.
 
-Local leaders drafting official public responses
+---
 
-Teams analyzing citizen complaints
+## API Configuration
 
-Officials preparing speeches or press releases
+The platform uses the **Anthropic Claude API** for AI-powered features.
 
-Administrators tracking community issues
+Update the following configuration in the JavaScript section:
 
-Policy teams reviewing civic data insights
+```javascript
+const API_URL = "https://api.anthropic.com/v1/messages";
+const MODEL = "claude-sonnet-4-20250514";
+```
 
-Future Improvements
+Add your **API key securely** in the request headers when deploying the application.
 
-Real time data integration from civic platforms
+---
 
-Speech to text meeting transcription
+## Example Use Cases
 
-Role based access control for secure governance
+- Government administrators summarizing policy documents  
+- Local leaders drafting official public responses  
+- Teams analyzing citizen complaints  
+- Officials preparing speeches or press releases  
+- Administrators tracking civic issues  
+- Policy teams reviewing public data insights  
 
-Integration with government databases
+---
 
-Predictive analytics for civic issues
+## Future Improvements
 
-Mobile application for field officers
+- Real-time integration with civic platforms
+- Speech-to-text meeting transcription
+- Role-based access control
+- Integration with government data sources
+- Predictive analytics for civic issues
+- Mobile application for field officers
 
-License
+---
 
-This project is released under the MIT License.
+## License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## Author
+
+Developed as part of a Civic Tech / Governance AI project to explore how artificial intelligence can assist public leaders and administrators in decision-making and communication.
