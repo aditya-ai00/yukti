@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdminAI — Leadership Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --surface: #111827;
+    --surface2: #1a2332;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0f4ff;
+    --text2: #8b9ab8;
+    --text3: #4a5a78;
+    --accent: #4f8ef7;
+    --accent2: #7c5aed;
+    --gold: #f0b429;
+    --teal: #00d4aa;
+    --coral: #ff6b6b;
+    --green: #4ade80;
+    --glow: rgba(79,142,247,0.15);
+    --radius: 12px;
+    --radius-lg: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .nav {
+    padding: 16px 0;
+    flex: 1;
+  }
+
+  .nav-section {
+    padding: 8px 20px 4px;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    border-radius: 0;
+    transition: all 0.15s;
+    font-size: 14px;
+    color: var(--text2);
+    position: relative;
+  }
+
+  .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+
+  .nav-item.active {
+    color: var(--accent);
+    background: rgba(79,142,247,0.08);
+  }
+
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--coral);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .user-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+  }
+
+  .user-name { font-size: 13px; font-weight: 500; }
+  .user-role { font-size: 11px; color: var(--text3); }
+
+  /* MAIN */
+  .main {
+    margin-left: 240px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky; top: 0; z-index: 50;
+  }
+
+  .page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:hover { background: #3a7ae8; }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+
+  .content {
+    padding: 28px 32px;
+    flex: 1;
+  }
+
+  /* PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* STAT CARDS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .stat-card:hover { border-color: var(--border2); }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+
+  .stat-card.blue::after { background: var(--accent); }
+  .stat-card.purple::after { background: var(--accent2); }
+  .stat-card.gold::after { background: var(--gold); }
+  .stat-card.teal::after { background: var(--teal); }
+
+  .stat-label { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .stat-value { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--text); }
+  .stat-delta { font-size: 12px; margin-top: 4px; }
+  .stat-delta.up { color: var(--green); }
+  .stat-delta.down { color: var(--coral); }
+
+  /* CONTENT GRID */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-body { padding: 20px; }
+
+  .full-width { grid-column: 1 / -1; }
+
+  /* AI INPUT */
+  .ai-input-wrap {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .ai-input-wrap:focus-within { border-color: var(--accent); }
+
+  .ai-textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    resize: none;
+    line-height: 1.6;
+    min-height: 90px;
+  }
+
+  .ai-textarea::placeholder { color: var(--text3); }
+
+  .ai-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .ai-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border2);
+    font-size: 12px;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip.active { background: rgba(79,142,247,0.15); border-color: var(--accent); color: var(--accent); }
+
+  .btn-run {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: opacity 0.2s;
+  }
+  .btn-run:hover { opacity: 0.88; }
+  .btn-run.loading { opacity: 0.6; pointer-events: none; }
+
+  /* AI OUTPUT */
+  .ai-output {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    min-height: 60px;
+    white-space: pre-wrap;
+    display: none;
+  }
+
+  .ai-output.visible { display: block; }
+
+  .ai-output-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: none;
+  }
+
+  .ai-output-label.visible { display: block; }
+
+  .typing-indicator {
+    display: inline-flex; gap: 4px; align-items: center;
+  }
+  .typing-indicator span {
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1s infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%,60%,100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+  }
+
+  /* ISSUES LIST */
+  .issue-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .issue-item:hover { opacity: 0.8; }
+  .issue-item:last-child { border-bottom: none; }
+
+  .issue-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .issue-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .issue-meta { font-size: 12px; color: var(--text3); }
+  .issue-badge {
+    margin-left: auto;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+
+  /* TASKS */
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .task-item:last-child { border-bottom: none; }
+
+  .task-check {
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border2);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .task-check.done { background: var(--green); border-color: var(--green); }
+  .task-check.done::after { content: '✓'; font-size: 11px; color: #0a0f1a; }
+
+  .task-text { font-size: 14px; flex: 1; }
+  .task-text.done { text-decoration: line-through; color: var(--text3); }
+  .task-due { font-size: 12px; color: var(--text3); }
+  .task-priority { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  /* SCHEDULE */
+  .sched-item {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .sched-item:last-child { border-bottom: none; }
+
+  .sched-time {
+    font-size: 12px;
+    color: var(--text3);
+    min-width: 48px;
+    padding-top: 2px;
+  }
+
+  .sched-bar { width: 3px; background: var(--accent2); border-radius: 4px; min-height: 36px; flex-shrink: 0; }
+  .sched-bar.gold { background: var(--gold); }
+  .sched-bar.teal { background: var(--teal); }
+
+  .sched-content {}
+  .sched-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .sched-loc { font-size: 12px; color: var(--text3); }
+
+  /* DATA INSIGHTS */
+  .insight-bar-wrap { margin-bottom: 14px; }
+  .insight-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  .insight-label { color: var(--text2); }
+  .insight-val { color: var(--text); font-weight: 600; }
+
+  .bar-track {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* SPEECH MODULE */
+  .speech-type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .speech-type-btn {
+    padding: 10px 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    color: var(--text2);
+    font-size: 13px;
+  }
+
+  .speech-type-btn:hover { border-color: var(--accent2); color: var(--text); }
+  .speech-type-btn.selected { background: rgba(124,90,237,0.12); border-color: var(--accent2); color: var(--accent2); }
+
+  .speech-icon { font-size: 18px; margin-bottom: 4px; }
+
+  /* METER */
+  .sentiment-meter {
+    height: 8px;
+    background: linear-gradient(to right, var(--coral), var(--gold), var(--green));
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .sentiment-needle {
+    position: absolute;
+    top: -3px;
+    width: 14px; height: 14px;
+    background: white;
+    border: 2px solid #0a0f1a;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    transition: left 0.6s ease;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+
+  .tab {
+    padding: 10px 18px;
+    font-size: 13px;
+    color: var(--text3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+
+  .tab:hover { color: var(--text2); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    z-index: 999;
+    display: none;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">⚡</div>
+      <div>
+        <div class="logo-text">AdminAI</div>
+        <div class="logo-sub">Intelligence Platform</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-section">Overview</div>
+    <div class="nav-item active" onclick="switchPanel('dashboard')">
+      <span class="nav-icon">◉</span> Dashboard
+    </div>
+
+    <div class="nav-section" style="margin-top:12px;">AI Modules</div>
+    <div class="nav-item" onclick="switchPanel('summarize')">
+      <span class="nav-icon">◈</span> Summarize
+    </div>
+    <div class="nav-item" onclick="switchPanel('speeches')">
+      <span class="nav-icon">◇</span> Speech Writer
+    </div>
+    <div class="nav-item" onclick="switchPanel('issues')">
+      <span class="nav-icon">◎</span> Issue Tracker
+      <span class="nav-badge">4</span>
+    </div>
+    <div class="nav-item" onclick="switchPanel('schedule')">
+      <span class="nav-icon">◫</span> Schedule
+    </div>
+    <div class="nav-item" onclick="switchPanel('insights')">
+      <span class="nav-icon">◬</span> Data Insights
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">JM</div>
+      <div>
+        <div class="user-name">J. Mitchell</div>
+        <div class="user-role">District Administrator</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="page-title" id="page-title">Dashboard</div>
+    <div class="topbar-actions">
+      <span style="font-size:12px; color:var(--text3);">Thu, March 12, 2026</span>
+      <button class="btn btn-ghost" onclick="showToast('Synced ✓')">↺ Sync</button>
+      <button class="btn btn-primary" onclick="switchPanel('summarize')">+ New Task</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD PANEL -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-label">Open Issues</div>
+          <div class="stat-value">24</div>
+          <div class="stat-delta up">↑ 3 this week</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-label">Pending Tasks</div>
+          <div class="stat-value">11</div>
+          <div class="stat-delta down">↓ 5 resolved today</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-label">Meetings Today</div>
+          <div class="stat-value">4</div>
+          <div class="stat-delta" style="color:var(--text3);">Next: 2:00 PM</div>
+        </div>
+        <div class="stat-card teal">
+          <div class="stat-label">AI Summaries</div>
+          <div class="stat-value">38</div>
+          <div class="stat-delta up">↑ 12 this month</div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <!-- Quick AI summary widget -->
+        <div class="card full-width">
+          <div class="card-header">
+            <div class="card-title">⚡ Quick AI Assistant</div>
+            <div style="font-size:12px;color:var(--text3);">Powered by Claude</div>
+          </div>
+          <div class="card-body">
+            <div class="ai-input-wrap">
+              <textarea class="ai-textarea" id="dash-input" placeholder="Paste a document, meeting notes, or ask a question... e.g. 'Summarize: [paste text]' or 'Draft a response to the community budget concern'"></textarea>
+              <div class="ai-toolbar">
+                <div class="ai-chips">
+                  <span class="chip" onclick="setQuickPrompt('Summarize this: ')">Summarize</span>
+                  <span class="chip" onclick="setQuickPrompt('Draft an official response to: ')">Draft Response</span>
+                  <span class="chip" onclick="setQuickPrompt('List key action items from: ')">Action Items</span>
+                  <span class="chip" onclick="setQuickPrompt('Give me 3 key insights from: ')">Insights</span>
+                </div>
+                <button class="btn-run" id="dash-run-btn" onclick="runDashAI()">
+                  <span>▶</span> Run AI
+                </button>
+              </div>
+            </div>
+            <div class="ai-output-label" id="dash-output-label">AI Response</div>
+            <div class="ai-output" id="dash-output"></div>
+          </div>
+        </div>
+
+        <!-- Today's schedule preview -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📅 Today's Schedule</div>
+            <button class="btn btn-ghost" style="font-size:12px; padding:5px 10px;" onclick="switchPanel('schedule')">View all</button>
+          </div>
+          <div class="card-body">
+            <div class="sched-item">
+              <div class="sched-time">9:00</div>
+              <div class="sched-bar gold"></div>
+              <div class="sched-content">
+                <div class="sched-title">Budget Committee Meeting</div>
+                <div class="sched-loc">Conference Room B · 1 hr</div>
+              </div>
+            </div>
+            <div class="sched-item">
+              <div class="sched-time">11:30</div>
+              <div class="sched-bar"></div>
+              <div class="sched-content">
+                <div class="sched-title">Community Liaison Call</div>
+                <div class="sched-loc">Zoom · 45 min</div>
+              </div>
+            </div>
+            <div class="sched-item">
+              <div class="sched-time">14:00</div>
+              <div class="sched-bar teal"></div>
+              <div class="sched-content">
+                <div class="sched-title">Press Release Review</div>
+                <div class="sched-loc">Office · 30 min</div>
+              </div>
+            </div>
+            <div class="sched-item">
+              <div class="sched-time">16:30</div>
+              <div class="sched-bar gold"></div>
+              <div class="sched-content">
+                <div class="sched-title">Town Hall Prep Session</div>
+                <div class="sched-loc">Main Hall · 2 hrs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top issues preview -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🔴 Priority Issues</div>
+            <button class="btn btn-ghost" style="font-size:12px; padding:5px 10px;" onclick="switchPanel('issues')">View all</button>
+          </div>
+          <div class="card-body">
+            <div class="issue-item" onclick="switchPanel('issues')">
+              <div class="issue-dot" style="background:var(--coral)"></div>
+              <div style="flex:1;">
+                <div class="issue-title">Road repair — Oak Street</div>
+                <div class="issue-meta">Reported by 42 residents · 5 days ago</div>
+              </div>
+              <div class="issue-badge" style="background:rgba(255,107,107,0.15);color:var(--coral);">Urgent</div>
+            </div>
+            <div class="issue-item" onclick="switchPanel('issues')">
+              <div class="issue-dot" style="background:var(--gold)"></div>
+              <div style="flex:1;">
+                <div class="issue-title">School funding gap 2026</div>
+                <div class="issue-meta">Finance dept · 12 days ago</div>
+              </div>
+              <div class="issue-badge" style="background:rgba(240,180,41,0.15);color:var(--gold);">High</div>
+            </div>
+            <div class="issue-item" onclick="switchPanel('issues')">
+              <div class="issue-dot" style="background:var(--accent)"></div>
+              <div style="flex:1;">
+                <div class="issue-title">Water main permit delay</div>
+                <div class="issue-meta">Public Works · 3 days ago</div>
+              </div>
+              <div class="issue-badge" style="background:rgba(79,142,247,0.15);color:var(--accent);">Medium</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARIZE PANEL -->
+    <div class="panel" id="panel-summarize">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this,'sum-tab-1')">Document Summary</div>
+        <div class="tab" onclick="switchTab(this,'sum-tab-2')">Meeting Notes</div>
+        <div class="tab" onclick="switchTab(this,'sum-tab-3')">Email Chain</div>
+      </div>
+
+      <div id="sum-tab-1">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">◈ AI Document Summarizer</div>
+            <div style="font-size:12px;color:var(--text3);">Paste or type any long document</div>
+          </div>
+          <div class="card-body">
+            <div style="margin-bottom:14px;">
+              <div style="font-size:12px;color:var(--text3);margin-bottom:8px;">Summary style</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span class="chip active" id="sum-style-executive" onclick="selectSumStyle(this,'Executive brief')">Executive brief</span>
+                <span class="chip" id="sum-style-bullets" onclick="selectSumStyle(this,'Bullet points')">Bullet points</span>
+                <span class="chip" id="sum-style-action" onclick="selectSumStyle(this,'Action items only')">Action items only</span>
+                <span class="chip" id="sum-style-detailed" onclick="selectSumStyle(this,'Detailed summary')">Detailed summary</span>
+              </div>
+            </div>
+            <div class="ai-input-wrap">
+              <textarea class="ai-textarea" id="sum-input" style="min-height:150px;" placeholder="Paste your document, report, meeting notes, or any long text here..."></textarea>
+              <div class="ai-toolbar">
+                <span style="font-size:12px;color:var(--text3);" id="sum-char-count">0 characters</span>
+                <button class="btn-run" id="sum-run-btn" onclick="runSummarize()">
+                  <span>◈</span> Summarize
+                </button>
+              </div>
+            </div>
+            <div class="ai-output-label" id="sum-output-label">Summary</div>
+            <div class="ai-output" id="sum-output"></div>
+            <div style="margin-top:12px;display:none;" id="sum-actions">
+              <button class="btn btn-ghost" style="margin-right:8px;" onclick="copyOutput('sum-output')">Copy</button>
+              <button class="btn btn-ghost" onclick="runFollowUp('sum-input','sum-output')">Ask follow-up</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sum-tab-2" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">◈ Meeting Notes Extractor</div>
+          </div>
+          <div class="card-body">
+            <div class="ai-input-wrap">
+              <textarea class="ai-textarea" id="meeting-input" style="min-height:150px;" placeholder="Paste meeting notes or transcript here..."></textarea>
+              <div class="ai-toolbar">
+                <div class="ai-chips">
+                  <span class="chip active">Decisions made</span>
+                  <span class="chip">Action items</span>
+                  <span class="chip">Key takeaways</span>
+                </div>
+                <button class="btn-run" onclick="runMeetingNotes()"><span>◈</span> Extract</button>
+              </div>
+            </div>
+            <div class="ai-output-label" id="meeting-output-label">Extracted Notes</div>
+            <div class="ai-output" id="meeting-output"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sum-tab-3" style="display:none;">
+        <div class="card">
+          <div class="card-header"><div class="card-title">◈ Email Chain Digest</div></div>
+          <div class="card-body">
+            <div class="ai-input-wrap">
+              <textarea class="ai-textarea" id="email-input" style="min-height:150px;" placeholder="Paste an email chain here..."></textarea>
+              <div class="ai-toolbar">
+                <span style="font-size:12px;color:var(--text3);">Extracts key context and required response</span>
+                <button class="btn-run" onclick="runEmailDigest()"><span>◈</span> Digest</button>
+              </div>
+            </div>
+            <div class="ai-output-label" id="email-output-label">Digest</div>
+            <div class="ai-output" id="email-output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPEECHES PANEL -->
+    <div class="panel" id="panel-speeches">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">◇ Speech & Response Writer</div>
+          <div style="font-size:12px;color:var(--text3);">Generate official communications</div>
+        </div>
+        <div class="card-body">
+          <div style="margin-bottom:16px;">
+            <div style="font-size:12px;color:var(--text3);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Document Type</div>
+            <div class="speech-type-grid">
+              <div class="speech-type-btn selected" id="stype-speech" onclick="selectSpeechType(this,'speech')">
+                <div class="speech-icon">🎤</div>
+                Public Speech
+              </div>
+              <div class="speech-type-btn" id="stype-response" onclick="selectSpeechType(this,'response')">
+                <div class="speech-icon">📨</div>
+                Official Response
+              </div>
+              <div class="speech-type-btn" id="stype-press" onclick="selectSpeechType(this,'press')">
+                <div class="speech-icon">📰</div>
+                Press Release
+              </div>
+              <div class="speech-type-btn" id="stype-letter" onclick="selectSpeechType(this,'letter')">
+                <div class="speech-icon">✉️</div>
+                Formal Letter
+              </div>
+              <div class="speech-type-btn" id="stype-statement" onclick="selectSpeechType(this,'statement')">
+                <div class="speech-icon">📢</div>
+                Statement
+              </div>
+              <div class="speech-type-btn" id="stype-briefing" onclick="selectSpeechType(this,'briefing')">
+                <div class="speech-icon">📋</div>
+                Briefing Note
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div>
+              <div style="font-size:12px;color:var(--text3);margin-bottom:6px;">Topic / Context</div>
+              <input type="text" id="speech-topic" placeholder="e.g. Budget cuts affecting local schools" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;">
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--text3);margin-bottom:6px;">Tone</div>
+              <select id="speech-tone" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;cursor:pointer;">
+                <option>Formal & authoritative</option>
+                <option>Empathetic & community-focused</option>
+                <option>Urgent & action-oriented</option>
+                <option>Calm & reassuring</option>
+                <option>Celebratory</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="font-size:12px;color:var(--text3);margin-bottom:6px;">Key points to include (optional)</div>
+            <textarea id="speech-points" placeholder="List any specific facts, figures, or talking points..." style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;resize:none;min-height:70px;line-height:1.6;"></textarea>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;">
+            <button class="btn-run" id="speech-run-btn" onclick="runSpeech()">◇ Generate</button>
+          </div>
+
+          <div style="margin-top:16px;">
+            <div class="ai-output-label" id="speech-output-label">Generated Content</div>
+            <div class="ai-output" id="speech-output"></div>
+            <div style="margin-top:12px;display:none;" id="speech-actions">
+              <button class="btn btn-ghost" style="margin-right:8px;" onclick="copyOutput('speech-output')">Copy</button>
+              <button class="btn btn-ghost" onclick="refineSpeech()">Refine tone</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ISSUES PANEL -->
+    <div class="panel" id="panel-issues">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div style="font-size:14px;color:var(--text2);">24 total issues · <span style="color:var(--coral);">4 urgent</span></div>
+        <button class="btn btn-primary" onclick="showToast('Issue form opened')">+ Log Issue</button>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">◎ Constituency Issues</div>
+          <div style="display:flex;gap:8px;">
+            <span class="chip active">All</span>
+            <span class="chip">Urgent</span>
+            <span class="chip">In Progress</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="issues-list"></div>
+          <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px;">
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px;">AI Issue Analysis</div>
+            <div class="ai-input-wrap">
+              <textarea class="ai-textarea" id="issue-ai-input" placeholder="Describe an issue and ask the AI to analyze, prioritize, or suggest a response..." style="min-height:60px;"></textarea>
+              <div class="ai-toolbar">
+                <div class="ai-chips">
+                  <span class="chip" onclick="setIssuePrompt('Suggest a response to: ')">Draft Response</span>
+                  <span class="chip" onclick="setIssuePrompt('Prioritize these issues: ')">Prioritize</span>
+                  <span class="chip" onclick="setIssuePrompt('What departments should handle: ')">Route Issue</span>
+                </div>
+                <button class="btn-run" id="issue-run-btn" onclick="runIssueAI()">Analyze</button>
+              </div>
+            </div>
+            <div class="ai-output-label" id="issue-output-label">Analysis</div>
+            <div class="ai-output" id="issue-output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE PANEL -->
+    <div class="panel" id="panel-schedule">
+      <div class="content-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">◫ Today — March 12</div>
+            <button class="btn btn-ghost" style="font-size:12px;padding:5px 10px;" onclick="showToast('Add event opened')">+ Add</button>
+          </div>
+          <div class="card-body">
+            <div id="full-schedule"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">⚡ Task List</div>
+            <span style="font-size:12px;color:var(--text3);" id="task-count"></span>
+          </div>
+          <div class="card-body">
+            <div id="task-list"></div>
+            <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+              <div style="font-size:12px;color:var(--text3);margin-bottom:8px;">AI Task Assistant</div>
+              <div class="ai-input-wrap">
+                <textarea class="ai-textarea" id="task-ai-input" placeholder="e.g. 'Add a task to review the infrastructure report by Friday' or 'What should I prioritize today?'" style="min-height:60px;"></textarea>
+                <div class="ai-toolbar">
+                  <span style="font-size:12px;color:var(--text3);">Ask AI to manage or prioritize tasks</span>
+                  <button class="btn-run" id="task-run-btn" onclick="runTaskAI()">Ask AI</button>
+                </div>
+              </div>
+              <div class="ai-output-label" id="task-output-label">Suggestion</div>
+              <div class="ai-output" id="task-output"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSIGHTS PANEL -->
+    <div class="panel" id="panel-insights">
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-label">Budget Utilized</div>
+          <div class="stat-value">68%</div>
+          <div class="stat-delta up">↑ Q1 on track</div>
+        </div>
+        <div class="stat-card teal">
+          <div class="stat-label">Resident Satisfaction</div>
+          <div class="stat-value">74%</div>
+          <div class="stat-delta up">↑ 6% from last quarter</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-label">Issues Resolved</div>
+          <div class="stat-value">83%</div>
+          <div class="stat-delta up">↑ 204 this year</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-label">Projects Active</div>
+          <div class="stat-value">12</div>
+          <div class="stat-delta down">↓ 2 delayed</div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="card">
+          <div class="card-header"><div class="card-title">◬ Budget by Department</div></div>
+          <div class="card-body" id="budget-bars"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">◬ Community Sentiment</div></div>
+          <div class="card-body">
+            <div style="margin-bottom:16px;">
+              <div style="font-size:12px;color:var(--text3);margin-bottom:8px;">Overall sentiment score</div>
+              <div class="sentiment-meter">
+                <div class="sentiment-needle" id="sentiment-needle" style="left:68%"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);">
+                <span>Negative</span><span>Neutral</span><span>Positive</span>
+              </div>
+            </div>
+            <div id="sentiment-breakdown"></div>
+          </div>
+        </div>
+
+        <div class="card full-width">
+          <div class="card-header">
+            <div class="card-title">⚡ Ask AI for Insights</div>
+          </div>
+          <div class="card-body">
+            <div class="ai-input-wrap">
+              <textarea class="ai-textarea" id="insights-input" placeholder="e.g. 'What are the top 3 spending concerns this quarter?' or 'Which department is most over budget?' or paste your data CSV here..."></textarea>
+              <div class="ai-toolbar">
+                <div class="ai-chips">
+                  <span class="chip" onclick="setInsightPrompt('What trends do you see in this data: ')">Trend Analysis</span>
+                  <span class="chip" onclick="setInsightPrompt('What are the biggest risks based on: ')">Risk Flags</span>
+                  <span class="chip" onclick="setInsightPrompt('Recommend actions based on: ')">Recommendations</span>
+                </div>
+                <button class="btn-run" id="insights-run-btn" onclick="runInsights()">◬ Analyze</button>
+              </div>
+            </div>
+            <div class="ai-output-label" id="insights-output-label">Insight Report</div>
+            <div class="ai-output" id="insights-output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = "https://api.anthropic.com/v1/messages";
+const MODEL = "claude-sonnet-4-20250514";
+
+let selectedSumStyle = "Executive brief";
+let selectedSpeechType = "speech";
+let tasks = [
+  {id:1, text:"Review FY2026 infrastructure report", done:false, due:"Today", priority:"coral"},
+  {id:2, text:"Approve Oak Street repair tender", done:false, due:"Tomorrow", priority:"gold"},
+  {id:3, text:"Send response to school board inquiry", done:true, due:"Mar 10", priority:"accent"},
+  {id:4, text:"Prepare town hall talking points", done:false, due:"Mar 13", priority:"coral"},
+  {id:5, text:"Sign community grant applications", done:true, due:"Mar 11", priority:"text3"},
+  {id:6, text:"Meet with water authority liaison", done:false, due:"Mar 14", priority:"accent"},
+];
+
+const issues = [
+  {title:"Road repair — Oak Street", dept:"Public Works", days:5, reporters:42, priority:"coral", label:"Urgent"},
+  {title:"School funding gap 2026", dept:"Finance Dept", days:12, reporters:1, priority:"gold", label:"High"},
+  {title:"Water main permit delay", dept:"Public Works", days:3, reporters:8, priority:"accent", label:"Medium"},
+  {title:"Playground maintenance Ward 3", dept:"Parks & Rec", days:8, reporters:17, priority:"gold", label:"High"},
+  {title:"Noise complaints — Industrial Zone", dept:"Community", days:14, reporters:23, priority:"accent", label:"Medium"},
+  {title:"Street lighting outage E. Main", dept:"Utilities", days:2, reporters:31, priority:"coral", label:"Urgent"},
+];
+
+const scheduleItems = [
+  {time:"08:30", title:"Morning briefing", loc:"Private office", color:"teal"},
+  {time:"09:00", title:"Budget Committee Meeting", loc:"Conference Room B · 1 hr", color:"gold"},
+  {time:"10:30", title:"Infrastructure project update", loc:"Teams call · 30 min", color:"accent2"},
+  {time:"11:30", title:"Community Liaison Call", loc:"Zoom · 45 min", color:""},
+  {time:"13:00", title:"Lunch with Councillor Evans", loc:"City Bistro", color:"teal"},
+  {time:"14:00", title:"Press Release Review", loc:"Office · 30 min", color:"teal"},
+  {time:"15:00", title:"1-on-1 with Director Chen", loc:"Office · 1 hr", color:"accent2"},
+  {time:"16:30", title:"Town Hall Prep Session", loc:"Main Hall · 2 hrs", color:"gold"},
+];
+
+const budgetData = [
+  {label:"Infrastructure", pct:82, color:"var(--coral)"},
+  {label:"Education", pct:71, color:"var(--accent)"},
+  {label:"Public Safety", pct:65, color:"var(--gold)"},
+  {label:"Healthcare", pct:58, color:"var(--teal)"},
+  {label:"Administration", pct:44, color:"var(--accent2)"},
+  {label:"Parks & Rec", pct:37, color:"var(--green)"},
+];
+
+const sentimentData = [
+  {label:"Infrastructure", score:62, color:"var(--coral)"},
+  {label:"Public Safety", score:81, color:"var(--green)"},
+  {label:"Education", score:74, color:"var(--accent)"},
+  {label:"Healthcare", score:70, color:"var(--teal)"},
+];
+
+function switchPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if(n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) n.classList.add('active');
+  });
+  const titles = {dashboard:'Dashboard', summarize:'Document Summarizer', speeches:'Speech & Response Writer', issues:'Issue Tracker', schedule:'Schedule & Tasks', insights:'Data Insights'};
+  document.getElementById('page-title').textContent = titles[id] || id;
+}
+
+function switchTab(el, tabId) {
+  el.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // hide siblings
+  const all = ['sum-tab-1','sum-tab-2','sum-tab-3'];
+  all.forEach(t => { const el2 = document.getElementById(t); if(el2) el2.style.display = 'none'; });
+  document.getElementById(tabId).style.display = 'block';
+}
+
+function selectSumStyle(el, style) {
+  document.querySelectorAll('#sum-tab-1 .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  selectedSumStyle = style;
+}
+
+function selectSpeechType(el, type) {
+  document.querySelectorAll('.speech-type-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSpeechType = type;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '✓ ' + msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 2500);
+}
+
+function setLoading(btnId, outputId, labelId, loading) {
+  const btn = document.getElementById(btnId);
+  const out = document.getElementById(outputId);
+  const lbl = document.getElementById(labelId);
+  if(loading) {
+    btn.classList.add('loading');
+    out.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+    out.classList.add('visible');
+    if(lbl) lbl.classList.add('visible');
+  } else {
+    btn.classList.remove('loading');
+  }
+}
+
+async function callClaude(systemPrompt, userContent, outputId, btnId, labelId, actionsId) {
+  setLoading(btnId, outputId, labelId, true);
+  try {
+    const res = await fetch(API_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages:[{role:'user', content: userContent}]
+      })
+    });
+    const data = await res.json();
+    const text = data.content && data.content[0] ? data.content[0].text : 'No response.';
+    document.getElementById(outputId).textContent = text;
+    if(actionsId) document.getElementById(actionsId).style.display = 'flex';
+  } catch(e) {
+    document.getElementById(outputId).textContent = 'Error: ' + e.message;
+  }
+  document.getElementById(btnId).classList.remove('loading');
+}
+
+function runDashAI() {
+  const input = document.getElementById('dash-input').value.trim();
+  if(!input) return;
+  callClaude(
+    "You are an AI assistant for government administrators and civic leaders. Provide concise, professional responses. Format nicely with clear sections when appropriate.",
+    input,
+    'dash-output', 'dash-run-btn', 'dash-output-label', null
+  );
+}
+
+function setQuickPrompt(prefix) {
+  const ta = document.getElementById('dash-input');
+  ta.value = prefix;
+  ta.focus();
+}
+
+function runSummarize() {
+  const input = document.getElementById('sum-input').value.trim();
+  if(!input) return;
+  callClaude(
+    `You are an expert executive assistant for government administrators. Summarize documents in a "${selectedSumStyle}" format. Be concise and professional. Use clear headers where appropriate.`,
+    input,
+    'sum-output', 'sum-run-btn', 'sum-output-label', 'sum-actions'
+  );
+}
+
+function runMeetingNotes() {
+  const input = document.getElementById('meeting-input').value.trim();
+  if(!input) return;
+  callClaude(
+    "You are an expert assistant for government leaders. From meeting notes or transcripts, extract: 1) KEY DECISIONS made, 2) ACTION ITEMS with responsible parties and deadlines, 3) FOLLOW-UPS required. Be clear and structured.",
+    input,
+    'meeting-output', document.querySelector('#sum-tab-2 .btn-run').id || 'sum-run-btn', 'meeting-output-label', null
+  );
+  document.querySelector('#sum-tab-2 .btn-run').classList.add('loading');
+  setTimeout(() => document.querySelector('#sum-tab-2 .btn-run').classList.remove('loading'), 100);
+}
+
+function runEmailDigest() {
+  const input = document.getElementById('email-input').value.trim();
+  if(!input) return;
+  callClaude(
+    "You are an executive assistant for a government administrator. Analyze this email chain and provide: 1) CONTEXT: What this is about in 2 sentences, 2) KEY STAKEHOLDERS and their positions, 3) REQUIRED ACTION from the administrator, 4) SUGGESTED RESPONSE points.",
+    input,
+    'email-output', document.querySelector('#sum-tab-3 .btn-run').id || 'sum-run-btn', 'email-output-label', null
+  );
+}
+
+function runSpeech() {
+  const topic = document.getElementById('speech-topic').value.trim();
+  const tone = document.getElementById('speech-tone').value;
+  const points = document.getElementById('speech-points').value.trim();
+  if(!topic) { alert('Please enter a topic.'); return; }
+
+  const typeLabels = {speech:'public speech', response:'official response', press:'press release', letter:'formal letter', statement:'public statement', briefing:'briefing note'};
+  const typeStr = typeLabels[selectedSpeechType] || selectedSpeechType;
+
+  const userContent = `Topic: ${topic}\nTone: ${tone}${points ? '\nKey points to include: ' + points : ''}`;
+
+  callClaude(
+    `You are a professional speechwriter and communications director for a government administrator. Write a ${typeStr} on the given topic. Ensure it is polished, authoritative, and appropriate for public communication. Include a compelling opening, clear body, and strong closing. Format it properly for the document type.`,
+    userContent,
+    'speech-output', 'speech-run-btn', 'speech-output-label', 'speech-actions'
+  );
+}
+
+function refineSpeech() {
+  const current = document.getElementById('speech-output').textContent;
+  if(!current) return;
+  const tone = document.getElementById('speech-tone').value;
+  callClaude(
+    `You are a professional speechwriter. Refine and improve the following document. Make it more ${tone.toLowerCase()}. Keep the same structure but improve word choice, flow, and impact.`,
+    current,
+    'speech-output', 'speech-run-btn', 'speech-output-label', 'speech-actions'
+  );
+}
+
+function runIssueAI() {
+  const input = document.getElementById('issue-ai-input').value.trim();
+  if(!input) return;
+  callClaude(
+    "You are a government operations advisor. Help administrators manage, analyze, and respond to community issues. Provide practical, professional advice including department routing, response templates, and escalation recommendations.",
+    input,
+    'issue-output', 'issue-run-btn', 'issue-output-label', null
+  );
+}
+
+function setIssuePrompt(prefix) {
+  const ta = document.getElementById('issue-ai-input');
+  ta.value = prefix;
+  ta.focus();
+}
+
+function runTaskAI() {
+  const input = document.getElementById('task-ai-input').value.trim();
+  if(!input) return;
+  const taskList = tasks.filter(t=>!t.done).map(t=>`- ${t.text} (due: ${t.due})`).join('\n');
+  callClaude(
+    "You are a professional executive assistant for a government administrator. Help manage, prioritize, and suggest approaches for their tasks. Provide clear, actionable recommendations.",
+    `Current pending tasks:\n${taskList}\n\nUser request: ${input}`,
+    'task-output', 'task-run-btn', 'task-output-label', null
+  );
+}
+
+function runInsights() {
+  const input = document.getElementById('insights-input').value.trim();
+  if(!input) return;
+  callClaude(
+    "You are a data analyst and advisor for government administrators. Analyze data, identify trends, flag risks, and provide clear strategic recommendations. Present insights in a structured, decision-ready format.",
+    input,
+    'insights-output', 'insights-run-btn', 'insights-output-label', null
+  );
+}
+
+function setInsightPrompt(prefix) {
+  const ta = document.getElementById('insights-input');
+  ta.value = prefix;
+  ta.focus();
+}
+
+function copyOutput(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+}
+
+function runFollowUp(inputId, outputId) {
+  const current = document.getElementById(outputId).textContent;
+  document.getElementById('dash-input').value = 'Based on this summary, what are the 3 most important next steps I should take?\n\nSummary:\n' + current;
+  switchPanel('dashboard');
+}
+
+// Render tasks
+function renderTasks() {
+  const list = document.getElementById('task-list');
+  if(!list) return;
+  const pending = tasks.filter(t=>!t.done).length;
+  const countEl = document.getElementById('task-count');
+  if(countEl) countEl.textContent = pending + ' pending';
+  list.innerHTML = tasks.map(t => `
+    <div class="task-item">
+      <div class="task-priority" style="background:var(--${t.priority})"></div>
+      <div class="task-check ${t.done?'done':''}" onclick="toggleTask(${t.id})"></div>
+      <div class="task-text ${t.done?'done':''}">${t.text}</div>
+      <div class="task-due">${t.due}</div>
+    </div>
+  `).join('');
+}
+
+function toggleTask(id) {
+  const t = tasks.find(t=>t.id===id);
+  if(t) { t.done = !t.done; renderTasks(); }
+}
+
+// Render issues
+function renderIssues() {
+  const list = document.getElementById('issues-list');
+  if(!list) return;
+  list.innerHTML = issues.map(i => `
+    <div class="issue-item">
+      <div class="issue-dot" style="background:var(--${i.priority})"></div>
+      <div style="flex:1;">
+        <div class="issue-title">${i.title}</div>
+        <div class="issue-meta">${i.dept} · ${i.reporters > 1 ? i.reporters + ' reporters · ' : ''}${i.days} days ago</div>
+      </div>
+      <div class="issue-badge" style="background:rgba(79,142,247,0.1);color:var(--${i.priority});">${i.label}</div>
+    </div>
+  `).join('');
+}
+
+// Render schedule
+function renderSchedule() {
+  const s = document.getElementById('full-schedule');
+  if(!s) return;
+  s.innerHTML = scheduleItems.map(i => `
+    <div class="sched-item">
+      <div class="sched-time">${i.time}</div>
+      <div class="sched-bar ${i.color}"></div>
+      <div class="sched-content">
+        <div class="sched-title">${i.title}</div>
+        <div class="sched-loc">${i.loc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Render budget bars
+function renderBudget() {
+  const el = document.getElementById('budget-bars');
+  if(!el) return;
+  el.innerHTML = budgetData.map(d => `
+    <div class="insight-bar-wrap">
+      <div class="insight-label-row">
+        <span class="insight-label">${d.label}</span>
+        <span class="insight-val">${d.pct}%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${d.pct}%;background:${d.color}"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Render sentiment
+function renderSentiment() {
+  const el = document.getElementById('sentiment-breakdown');
+  if(!el) return;
+  el.innerHTML = sentimentData.map(d => `
+    <div class="insight-bar-wrap">
+      <div class="insight-label-row">
+        <span class="insight-label">${d.label}</span>
+        <span class="insight-val">${d.score}%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${d.score}%;background:${d.color}"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Char count
+document.addEventListener('DOMContentLoaded', () => {
+  const sumInput = document.getElementById('sum-input');
+  if(sumInput) {
+    sumInput.addEventListener('input', () => {
+      document.getElementById('sum-char-count').textContent = sumInput.value.length.toLocaleString() + ' characters';
+    });
+  }
+  renderTasks();
+  renderIssues();
+  renderSchedule();
+  renderBudget();
+  renderSentiment();
+});
+
+// enter to submit on dash
+document.addEventListener('keydown', (e) => {
+  if(e.ctrlKey && e.key === 'Enter') {
+    const active = document.querySelector('.panel.active');
+    if(active && active.id === 'panel-dashboard') runDashAI();
+    if(active && active.id === 'panel-summarize') runSummarize();
+  }
+});
+</script>
+</body>
+</html>
